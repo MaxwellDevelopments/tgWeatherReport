@@ -27,9 +27,9 @@ import json
 
 import requests
 
-import config
+from api_requests import api_config
 
-@config.api(apikey=config.keys['apikey_geo'])
+@api_config.api(apikey=api_config.keys['apikey_geo'])
 def get_city_location(city: str, apikey: str):
     payload = dict(
         geocode=city,
@@ -42,7 +42,7 @@ def get_city_location(city: str, apikey: str):
     return position
     
 
-@config.api(apikey=config.keys['apikey_weather'])
+@api_config.api(apikey=api_config.keys['apikey_weather'])
 def get_weather(city: str, apikey_dict: dict[str]):
     payload = {key: value for key, value in
         zip(('lat', 'lon', 'lang'), get_city_location(city).split() + ['ru_RU'])
@@ -50,6 +50,3 @@ def get_weather(city: str, apikey_dict: dict[str]):
     request = requests.get('https://api.weather.yandex.ru/v2/forecast?', params=payload, headers=apikey_dict)
     js_req = json.loads(request.text)
     return js_req
-    
-
-print(get_weather('Санкт-Петербург')['fact'])

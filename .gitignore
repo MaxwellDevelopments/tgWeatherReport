@@ -129,4 +129,6 @@ dmypy.json
 .pyre/
 
 #my_settings
-config.py
+api_config.py
+bot_config.py
+db_config.py
